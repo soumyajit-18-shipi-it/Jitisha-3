@@ -2696,7 +2696,244 @@ footer {
 }
 
 /* ==========================================================================
-   15. ACCESSIBILITY & PREFERS-REDUCED-MOTION
+   15. ROMANTIC ANIMATIONS & CUTE INTERACTIVE WIDGETS
+   ========================================================================== */
+.tap-hearts-layer {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9999;
+  overflow: hidden;
+}
+
+.tap-heart {
+  position: absolute;
+  pointer-events: none;
+  user-select: none;
+  animation: tapHeartAnim 0.95s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  will-change: transform, opacity;
+  text-shadow: 0 2px 8px rgba(120, 45, 70, 0.25);
+}
+
+@keyframes tapHeartAnim {
+  0% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(0.6);
+  }
+  40% {
+    transform: translate(-50%, -65px) scale(1.2);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -115px) scale(0.85);
+  }
+}
+
+.music-player {
+  position: relative;
+}
+
+.music-notes-floating {
+  position: absolute;
+  left: 55px;
+  top: -12px;
+  pointer-events: none;
+  z-index: 5;
+}
+
+.music-notes-floating span {
+  position: absolute;
+  font-size: 1.45rem;
+  color: var(--rose);
+  opacity: 0;
+  animation: floatMusicNote 2.4s ease-in-out infinite;
+}
+
+@keyframes floatMusicNote {
+  0% {
+    opacity: 0;
+    transform: translate(0, 0) scale(0.6) rotate(0deg);
+  }
+  30% {
+    opacity: 0.95;
+  }
+  100% {
+    opacity: 0;
+    transform: translate(25px, -55px) scale(1.15) rotate(22deg);
+  }
+}
+
+/* Love Jar Reasons Card */
+.love-jar-card {
+  max-width: 680px;
+  margin: 45px auto 35px;
+  padding: clamp(26px, 5vw, 42px);
+  background: #fffaf5;
+  border: 1px solid rgba(198, 91, 121, 0.28);
+  border-radius: 16px;
+  text-align: center;
+  box-shadow: 0 16px 40px rgba(120, 45, 70, 0.08);
+  position: relative;
+}
+
+.love-jar-top {
+  margin-bottom: 14px;
+}
+
+.love-jar-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: 'Caveat', cursive;
+  font-size: 1.18rem;
+  color: var(--rose);
+  background: var(--blush);
+  padding: 4px 16px;
+  border-radius: 999px;
+}
+
+.love-jar-top h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1.6rem, 3.5vw, 2.3rem);
+  font-weight: 500;
+  margin: 10px 0 0;
+  color: var(--wine);
+}
+
+.love-jar-text {
+  min-height: 85px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 18px;
+  transition: opacity 0.22s ease, transform 0.22s ease;
+}
+
+.love-jar-text.flipping {
+  opacity: 0;
+  transform: scale(0.96) translateY(6px);
+}
+
+.love-jar-text p {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(1.25rem, 2.6vw, 1.6rem);
+  line-height: 1.45;
+  color: #5b3e49;
+  margin: 0;
+  font-style: italic;
+}
+
+.quote-glyph {
+  font-family: 'Playfair Display', serif;
+  font-size: 2.2rem;
+  color: var(--dust);
+  line-height: 1;
+  margin: 0 4px;
+}
+
+.love-jar-actions {
+  margin-top: 18px;
+}
+
+.love-jar-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 44px;
+  padding: 10px 24px;
+  border-radius: 999px;
+  background: var(--rose);
+  color: #fff;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.88rem;
+  font-weight: 500;
+  box-shadow: 0 6px 18px rgba(198, 91, 121, 0.28);
+  transition: all 0.25s ease;
+}
+
+.love-jar-btn:hover {
+  background: #b54967;
+  transform: translateY(-2px);
+  box-shadow: 0 10px 22px rgba(198, 91, 121, 0.38);
+}
+
+.love-jar-btn:active {
+  transform: scale(0.96);
+}
+
+/* Virtual Hug Widget */
+.hug-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 25px auto 40px;
+  text-align: center;
+}
+
+.hug-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 50px;
+  padding: 12px 28px;
+  border-radius: 999px;
+  background: #fffaf5;
+  border: 1.5px solid var(--rose);
+  color: var(--burgundy);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 600;
+  box-shadow: 0 8px 24px rgba(198, 91, 121, 0.16);
+  transition: all 0.25s ease;
+}
+
+.hug-btn:hover {
+  background: #fff3f6;
+  transform: translateY(-2px);
+  box-shadow: 0 12px 28px rgba(198, 91, 121, 0.26);
+}
+
+.hug-btn:active {
+  transform: scale(0.95);
+}
+
+.hug-icon {
+  animation: heartbeat 1.8s ease-in-out infinite;
+  color: var(--rose);
+}
+
+@keyframes heartbeat {
+  0%, 100% { transform: scale(1); }
+  25% { transform: scale(1.18); }
+  40% { transform: scale(1); }
+  60% { transform: scale(1.12); }
+}
+
+.hug-toast {
+  margin-top: 14px;
+  padding: 10px 22px;
+  background: #fff;
+  border: 1px solid rgba(198, 91, 121, 0.25);
+  border-radius: 20px;
+  box-shadow: 0 6px 18px rgba(56, 35, 45, 0.08);
+}
+
+.hug-toast strong {
+  display: block;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.9rem;
+  color: var(--burgundy);
+}
+
+.hug-toast p {
+  margin: 2px 0 0;
+  font-family: 'Caveat', cursive;
+  font-size: 1.15rem;
+  color: var(--rose);
+}
+
+/* ==========================================================================
+   16. ACCESSIBILITY & PREFERS-REDUCED-MOTION
    ========================================================================== */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {

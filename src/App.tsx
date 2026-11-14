@@ -1,7 +1,17 @@
 import { useEffect, useRef, useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { ArrowDown, ArrowLeft, ArrowRight, Menu, Pause, Play, Sparkles, Volume1, Volume2, VolumeX, X, Heart, Music, ExternalLink } from 'lucide-react'
-import { beIntehaa, chocolates, destinations, dhireDhire, favourites, flowers, letters, personalPhotos, SPOTIFY_PLAYLIST_URL } from './content'
+import { beIntehaa, chocolates, destinations, dhireDhire, favourites, flowers, letters, loveReasons, personalPhotos, SPOTIFY_PLAYLIST_URL } from './content'
+
+interface HeartParticle {
+  id: number
+  x: number
+  y: number
+  symbol: string
+  color: string
+  size: number
+  rotation: number
+}
 
 const reveal = { hidden: { opacity: 0, y: 28 }, visible: { opacity: 1, y: 0, transition: { duration: .7 } } }
 function SectionTitle({ eyebrow, title, copy }: { eyebrow?: string; title: string; copy?: string }) {
@@ -19,6 +29,11 @@ function App() {
   const [roseOpen, setRoseOpen] = useState(false)
   const [giftOpen, setGiftOpen] = useState(false)
   const [navSolid, setNavSolid] = useState(false)
+  const [hearts, setHearts] = useState<HeartParticle[]>([])
+  const [reasonIndex, setReasonIndex] = useState(0)
+  const [noteFlip, setNoteFlip] = useState(false)
+  const [hugCount, setHugCount] = useState(0)
+  const [hugMessage, setHugMessage] = useState('')
   const beAudioRef = useRef<HTMLAudioElement>(null)
   const dhireAudioRef = useRef<HTMLAudioElement>(null)
 
@@ -26,6 +41,36 @@ function App() {
     const onScroll = () => setNavSolid(window.scrollY > 40)
     window.addEventListener('scroll', onScroll, { passive: true })
     return () => window.removeEventListener('scroll', onScroll)
+  }, [])
+
+  // Floating tap/click heart particles
+  useEffect(() => {
+    const symbols = ['♡', '✨', '🌸', '💕', '✦']
+    const colors = ['#c65b79', '#e8a5b5', '#d4728c', '#e2889e', '#b8506e']
+
+    const handlePointerDown = (e: MouseEvent) => {
+      // Don't spawn if clicking inside close buttons or modals
+      const target = e.target as HTMLElement
+      if (target.closest('.close, .drawer-close, input, textarea')) return
+
+      const newParticle: HeartParticle = {
+        id: Date.now() + Math.random(),
+        x: e.clientX,
+        y: e.clientY,
+        symbol: symbols[Math.floor(Math.random() * symbols.length)],
+        color: colors[Math.floor(Math.random() * colors.length)],
+        size: Math.floor(Math.random() * 8) + 16,
+        rotation: (Math.random() - 0.5) * 40
+      }
+
+      setHearts(prev => [...prev.slice(-12), newParticle])
+      setTimeout(() => {
+        setHearts(prev => prev.filter(p => p.id !== newParticle.id))
+      }, 950)
+    }
+
+    window.addEventListener('click', handlePointerDown)
+    return () => window.removeEventListener('click', handlePointerDown)
   }, [])
 
   // Lock body scroll when mobile menu or modal is open
@@ -85,6 +130,48 @@ function App() {
     setDhireProgress(percentage * 100)
   }
 
+  const nextReason = () => {
+    setNoteFlip(true)
+    setTimeout(() => {
+      setReasonIndex(prev => (prev + 1) % loveReasons.length)
+      setNoteFlip(false)
+    }, 220)
+  }
+
+  const handleSendHug = (e: React.MouseEvent<HTMLButtonElement>) => {
+    const newCount = hugCount + 1
+    setHugCount(newCount)
+
+    const messages = [
+      'A soft, gentle hug sent straight to you ♡',
+      'Another warm, tight hug to make you smile 🌸',
+      'Wrapping you in the coziest little hug right now!',
+      'Holding you safe, warm, and happy in my thoughts ♡',
+      'You are so deeply cherished and loved 💕',
+      'An infinite supply of hugs, forever reserved for you ♡'
+    ]
+    setHugMessage(messages[(newCount - 1) % messages.length])
+
+    // Fountain of hearts bursting from the button
+    const rect = e.currentTarget.getBoundingClientRect()
+    const centerX = rect.left + rect.width / 2
+    const centerY = rect.top + rect.height / 2
+    const symbols = ['♡', '💕', '🌸', '✨', '💖']
+    const colors = ['#c65b79', '#e8a5b5', '#d4728c', '#e2889e']
+
+    const burstParticles: HeartParticle[] = Array.from({ length: 6 }, (_, i) => ({
+      id: Date.now() + i + Math.random(),
+      x: centerX + (Math.random() - 0.5) * 80,
+      y: centerY + (Math.random() - 0.5) * 20,
+      symbol: symbols[Math.floor(Math.random() * symbols.length)],
+      color: colors[Math.floor(Math.random() * colors.length)],
+      size: Math.floor(Math.random() * 8) + 18,
+      rotation: (Math.random() - 0.5) * 50
+    }))
+
+    setHearts(prev => [...prev.slice(-15), ...burstParticles])
+  }
+
   const scrollTo = (id: string) => {
     setMenuOpen(false)
     const element = document.getElementById(id)
@@ -108,6 +195,25 @@ function App() {
 
   return (
     <div className="site">
+      {/* Interactive Tap & Click Floating Hearts */}
+      <div className="tap-hearts-layer" aria-hidden="true">
+        {hearts.map(h => (
+          <span
+            key={h.id}
+            className="tap-heart"
+            style={{
+              left: `${h.x}px`,
+              top: `${h.y}px`,
+              color: h.color,
+              fontSize: `${h.size}px`,
+              transform: `translate(-50%, -50%) rotate(${h.rotation}deg)`
+            }}
+          >
+            {h.symbol}
+          </span>
+        ))}
+      </div>
+
       <audio ref={beAudioRef} loop src={beIntehaa.src} aria-label="Be Intehaa audio" onEnded={() => setBePlaying(false)} />
       <audio ref={dhireAudioRef} src={dhireDhire.src} aria-label="Dhire Dhire audio" onTimeUpdate={e => setDhireProgress(e.currentTarget.duration ? e.currentTarget.currentTime / e.currentTarget.duration * 100 : 0)} onEnded={() => { setDhirePlaying(false); setDhireProgress(0) }} />
 
@@ -388,6 +494,14 @@ function App() {
             <div className={dhirePlaying ? 'record spinning' : 'record'}>
               <div className="record-label">♡</div>
             </div>
+            {dhirePlaying && (
+              <div className="music-notes-floating" aria-hidden="true">
+                <span style={{ animationDelay: '0s' }}>♪</span>
+                <span style={{ animationDelay: '0.6s' }}>♫</span>
+                <span style={{ animationDelay: '1.2s' }}>♡</span>
+                <span style={{ animationDelay: '1.8s' }}>♩</span>
+              </div>
+            )}
             <div className="track-info">
               <span>now playing</span>
               <h3>{dhireDhire.title}</h3>
@@ -429,6 +543,46 @@ function App() {
                 <small>tap to open ♡</small>
               </button>
             ))}
+          </div>
+
+          {/* A Little Jar of Love Reasons */}
+          <div className="love-jar-card">
+            <div className="love-jar-top">
+              <span className="love-jar-badge">
+                <Sparkles size={14} /> Reason #{reasonIndex + 1} of {loveReasons.length} <Sparkles size={14} />
+              </span>
+              <h3>Why You Are So Adored ♡</h3>
+            </div>
+            <div className={`love-jar-text ${noteFlip ? 'flipping' : ''}`}>
+              <span className="quote-glyph">“</span>
+              <p>{loveReasons[reasonIndex]}</p>
+              <span className="quote-glyph end">”</span>
+            </div>
+            <div className="love-jar-actions">
+              <button className="love-jar-btn" onClick={nextReason}>
+                <span>Pick another reason</span>
+                <b>🌸</b>
+              </button>
+            </div>
+          </div>
+
+          {/* Send a Warm Virtual Hug */}
+          <div className="hug-container">
+            <button className="hug-btn" onClick={handleSendHug} aria-label="Send a warm hug">
+              <Heart className="hug-icon" size={20} fill="#c65b79" />
+              <span>Send a Warm Hug to Jitisha ♡</span>
+            </button>
+            {hugCount > 0 && (
+              <motion.div
+                className="hug-toast"
+                initial={{ opacity: 0, y: 10, scale: 0.94 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                key={hugCount}
+              >
+                <strong>{hugCount} {hugCount === 1 ? 'warm hug' : 'warm hugs'} sent with love!</strong>
+                <p>{hugMessage}</p>
+              </motion.div>
+            )}
           </div>
 
           {/* Chocolate Gift Box */}

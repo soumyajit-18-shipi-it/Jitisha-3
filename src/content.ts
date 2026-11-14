@@ -53,6 +53,19 @@ export const letters = [
   ['Open whenever you want', 'You are special in ways that do not need a reason. I hope this little world makes that feel true.'],
 ]
 
+export const loveReasons = [
+  'The way your smile instantly lights up the whole room and makes everything softer.',
+  'How your eyes sparkle whenever you get excited about food or cute things ♡',
+  'Your laugh — genuinely the sweetest and most comforting sound in the world.',
+  'How effortlessly you make ordinary days feel memorable and full of warmth.',
+  'The way you look in warm evening light, looking like pure poetry without even trying.',
+  'How deeply caring, gentle, and lovely you are to people around you.',
+  'The cute little habits and expressions that belong only to you ♡',
+  'The feeling of peace that comes just from hearing your voice.',
+  'How you make me want to be the best version of myself every single day.',
+  'Because in a world of billions of people, you are my absolute favorite little universe ♡'
+]
+
 export const SPOTIFY_PLAYLIST_URL = 'https://open.spotify.com/playlist/09LCgdWhzO625JdykPtQKu?si=3b0bf90f286e4790'
 export const beIntehaa = { title: 'Be Intehaa', artist: 'Race 2', src: '/music/be-intehaa.mp3' }
 export const dhireDhire = { title: 'Dhire Dhire Chal Re Samaya', artist: 'Chocolate', src: '/music/dhire-dhire.mp3' }
