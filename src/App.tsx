@@ -18,6 +18,54 @@ function SectionTitle({ eyebrow, title, copy }: { eyebrow?: string; title: strin
   return <div className="section-title"><span>{eyebrow || 'A little note'}</span><h2>{title}</h2>{copy && <p>{copy}</p>}</div>
 }
 
+function MessageBoxDiagram({ variant = 0 }: { variant?: number }) {
+  const themes = [
+    { bg: '#fff5f7', flap: '#ffe8ee', stroke: '#c65b79', seal: '#c65b79', fold: 'rgba(198, 91, 121, 0.32)' },
+    { bg: '#fff9f2', flap: '#fdefdf', stroke: '#c4687d', seal: '#b8546b', fold: 'rgba(196, 104, 125, 0.32)' },
+    { bg: '#faf4fb', flap: '#f3e5f7', stroke: '#a85b88', seal: '#9d4f7d', fold: 'rgba(168, 91, 136, 0.32)' },
+    { bg: '#fdf7f4', flap: '#faebe4', stroke: '#c65b79', seal: '#bd4b6b', fold: 'rgba(198, 91, 121, 0.32)' },
+  ]
+  const t = themes[variant % themes.length]
+
+  return (
+    <div className="envelope-diagram" aria-hidden="true">
+      <svg viewBox="0 0 76 52" width="76" height="52" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <filter id={`shadow-${variant}`} x="-15%" y="-15%" width="130%" height="135%" filterUnits="userSpaceOnUse">
+            <feDropShadow dx="0" dy="2.5" stdDeviation="2.5" floodColor="#782d46" floodOpacity="0.12" />
+          </filter>
+        </defs>
+
+        {/* Envelope Base Box */}
+        <rect x="3" y="3" width="70" height="46" rx="5" fill={t.bg} stroke={t.stroke} strokeWidth="1.5" filter={`url(#shadow-${variant})`} />
+
+        {/* Diagonal Interior Folds */}
+        <path d="M3 49 L38 27 L3 3" stroke={t.fold} strokeWidth="1.2" strokeLinecap="round" />
+        <path d="M73 49 L38 27 L73 3" stroke={t.fold} strokeWidth="1.2" strokeLinecap="round" />
+
+        {/* Bottom Fold Contour */}
+        <path d="M3 49 L38 27 L73 49 Z" fill={t.flap} fillOpacity="0.5" stroke={t.stroke} strokeWidth="1.2" strokeLinejoin="round" />
+
+        {/* Top Folded Flap */}
+        <path d="M3 3 L38 29 L73 3 Z" fill={t.flap} stroke={t.stroke} strokeWidth="1.5" strokeLinejoin="round" />
+
+        {/* Delicate Inner Highlight */}
+        <path d="M8 5 L38 27 L68 5" stroke="#ffffff" strokeWidth="1.2" strokeLinecap="round" opacity="0.8" />
+
+        {/* Wax Seal Outer & Inner Ring */}
+        <circle cx="38" cy="29" r="8" fill={t.seal} />
+        <circle cx="38" cy="29" r="6.8" stroke="#ffffff" strokeWidth="0.8" strokeDasharray="1.5 1.5" fill="none" opacity="0.85" />
+
+        {/* Heart Stamped in Center of Wax Seal */}
+        <path
+          d="M38 32 C38 32 34.5 29.5 34.5 27.5 C34.5 26.4 35.3 25.6 36.4 25.6 C37.1 25.6 37.7 26 38 26.6 C38.3 26 38.9 25.6 39.6 25.6 C40.7 25.6 41.5 26.4 41.5 27.5 C41.5 29.5 38 32 38 32 Z"
+          fill="#ffffff"
+        />
+      </svg>
+    </div>
+  )
+}
+
 function App() {
   const [menuOpen, setMenuOpen] = useState(false)
   const [volume, setVolume] = useState(1)
@@ -538,7 +586,7 @@ function App() {
                 aria-label={`Open letter: ${label}`}
               >
                 <span className="letter-flower" aria-hidden="true">✽</span>
-                <span className="envelope-icon" aria-hidden="true"><i /></span>
+                <MessageBoxDiagram variant={i} />
                 <strong>{label}</strong>
                 <small>tap to open ♡</small>
               </button>

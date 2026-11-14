@@ -1469,47 +1469,21 @@ img {
   transform: scale(0.98);
 }
 
-.envelope-icon {
-  position: relative;
-  width: 76px;
-  height: 54px;
-  margin: 0 auto 16px;
-  border: 1px solid var(--rose);
-  background: var(--blush);
-  border-radius: 3px;
-  transform: rotate(-2deg);
+.envelope-diagram {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto 15px;
+  transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
-.envelope-icon::before,
-.envelope-icon::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  width: 53px;
-  height: 1px;
-  background: var(--rose);
+.envelope:hover .envelope-diagram {
+  transform: translateY(-4px) scale(1.06);
 }
 
-.envelope-icon::before {
-  left: 0;
-  transform: rotate(33deg);
-  transform-origin: left;
-}
-
-.envelope-icon::after {
-  right: 0;
-  transform: rotate(-33deg);
-  transform-origin: right;
-}
-
-.envelope-icon i {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  width: 10px;
-  height: 10px;
-  background: var(--rose);
-  transform: translate(-50%, -15%) rotate(45deg);
+.envelope-diagram svg {
+  display: block;
+  overflow: visible;
 }
 
 .letter-flower {
@@ -1535,10 +1509,6 @@ img {
   font-size: 1.05rem;
   margin-top: 14px;
 }
-
-.letter-1 .envelope-icon { background: #f3e8dc; }
-.letter-2 .envelope-icon { background: #eadff0; }
-.letter-3 .envelope-icon { background: #f7dfe3; }
 
 /* Chocolate Gift Box */
 .gift-card {
