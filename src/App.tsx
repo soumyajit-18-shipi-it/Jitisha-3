@@ -516,8 +516,10 @@ function App() {
           <div className="gallery-petals" aria-hidden="true"><i>♡</i><i>✦</i><i>❀</i><i>♡</i></div>
           <SectionTitle eyebrow="Our gallery" title="My Favourite Little Moments ♡" copy="Because some photographs deserve their own little place in the world." />
           <div className="gallery-stage">
-            <span className="gallery-note note-left">my favourite<br />little view ♡</span>
-            <span className="gallery-note note-right">the sunshine<br />in every photo</span>
+            <div className="gallery-notes-bar">
+              <span className="gallery-note note-left">my favourite little view ♡</span>
+              <span className="gallery-note note-right">the sunshine in every photo</span>
+            </div>
             <div className="gallery-ribbon" aria-hidden="true" />
             <div className="photo-grid">
               {personalPhotos.map((item, i) => (
