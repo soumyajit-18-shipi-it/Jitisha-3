@@ -19,16 +19,104 @@ function SectionTitle({ eyebrow, title, copy }: { eyebrow?: string; title: strin
 }
 
 function MessageBoxDiagram({ variant = 0 }: { variant?: number }) {
+  const isRightTilted = variant % 2 === 1
+  const rot = isRightTilted ? 5.5 : -5.5
+
   return (
     <div className="envelope-diagram" aria-hidden="true">
-      <svg viewBox="0 0 46 20" width="46" height="20" fill="none" xmlns="http://www.w3.org/2000/svg">
-        {/* Aesthetic Envelope Flap Chevron from Reference Image */}
-        <line x1="3" y1="18" x2="23" y2="2" stroke="#c8657f" strokeWidth="1.5" strokeLinecap="round" />
-        <line x1="23" y1="2" x2="43" y2="18" stroke="#c8657f" strokeWidth="1.5" strokeLinecap="round" />
-        {/* Suspension link from apex */}
-        <line x1="23" y1="2" x2="23" y2="5.5" stroke="#c8657f" strokeWidth="1.3" />
-        {/* Diamond seal (rhombus) nestled right beneath apex */}
-        <polygon points="23,4.5 27.5,9 23,13.5 18.5,9" fill="#c8657f" />
+      <svg viewBox="0 0 96 64" width="96" height="64" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id={`envGrad-${variant}`} x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stopColor="#fff5f7" />
+            <stop offset="100%" stopColor="#fcdde5" />
+          </linearGradient>
+          <linearGradient id={`flapGrad-${variant}`} x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stopColor="#ffeef2" />
+            <stop offset="100%" stopColor="#f8cbda" />
+          </linearGradient>
+          <linearGradient id={`heartGrad-${variant}`} x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stopColor="#f47c98" />
+            <stop offset="100%" stopColor="#d84d72" />
+          </linearGradient>
+          <filter id={`softShadow-${variant}`} x="-15%" y="-15%" width="130%" height="130%">
+            <feDropShadow dx="1" dy="3.5" stdDeviation="2.5" floodColor="#b85068" floodOpacity="0.18" />
+          </filter>
+        </defs>
+
+        {/* Soft Wavy Grounding Arc */}
+        <path d="M18 55 Q 48 61 78 55" stroke="rgba(200, 118, 135, 0.35)" strokeWidth="1.2" fill="none" strokeLinecap="round" />
+
+        {/* Tiny heart below base arc */}
+        <path
+          d="M48 62 C48 62 45 59.8 45 58 C45 56.8 45.8 56 46.8 56 C47.4 56 47.8 56.4 48 56.8 C48.2 56.4 48.6 56 49.2 56 C50.2 56 51 56.8 51 58 C51 59.8 48 62 48 62 Z"
+          fill="#e0728c"
+        />
+
+        {/* Radiance Rays (Left on variant 0/2, Right on variant 1/3) */}
+        {!isRightTilted ? (
+          <g className="envelope-rays">
+            <line x1="7" y1="19" x2="12" y2="24" stroke="#c87687" strokeWidth="1.6" strokeLinecap="round" />
+            <line x1="4" y1="29" x2="10" y2="30" stroke="#c87687" strokeWidth="1.6" strokeLinecap="round" />
+            <line x1="5" y1="39" x2="11" y2="37" stroke="#c87687" strokeWidth="1.6" strokeLinecap="round" />
+          </g>
+        ) : (
+          <g className="envelope-rays">
+            <line x1="89" y1="19" x2="84" y2="24" stroke="#c87687" strokeWidth="1.6" strokeLinecap="round" />
+            <line x1="92" y1="29" x2="86" y2="30" stroke="#c87687" strokeWidth="1.6" strokeLinecap="round" />
+            <line x1="91" y1="39" x2="85" y2="37" stroke="#c87687" strokeWidth="1.6" strokeLinecap="round" />
+          </g>
+        )}
+
+        {/* Floating Mini Hearts (Opposite side of radiance rays) */}
+        {!isRightTilted ? (
+          <g className="envelope-floating-hearts">
+            <path
+              d="M85 27 C85 27 82.5 25 82.5 23.5 C82.5 22.5 83.2 21.8 84.2 21.8 C84.7 21.8 85 22.1 85 22.5 C85 22.1 85.3 21.8 85.8 21.8 C86.8 21.8 87.5 22.5 87.5 23.5 C87.5 25 85 27 85 27 Z"
+              fill="#e8849b"
+            />
+            <path
+              d="M83 37 C83 37 80 34.5 80 33 C80 31.8 80.8 31 81.8 31 C82.4 31 82.8 31.3 83 31.7 C83.2 31.3 83.6 31 84.2 31 C85.2 31 86 31.8 86 33 C86 34.5 83 37 83 37 Z"
+              fill="#f29ab0"
+              opacity="0.9"
+            />
+          </g>
+        ) : (
+          <g className="envelope-floating-hearts">
+            <path
+              d="M11 27 C11 27 8.5 25 8.5 23.5 C8.5 22.5 9.2 21.8 10.2 21.8 C10.7 21.8 11 22.1 11 22.5 C11 22.1 11.3 21.8 11.8 21.8 C12.8 21.8 13.5 22.5 13.5 23.5 C13.5 25 11 27 11 27 Z"
+              fill="#e8849b"
+            />
+            <path
+              d="M13 37 C13 37 10 34.5 10 33 C10 31.8 10.8 31 11.8 31 C12.4 31 12.8 31.3 13 31.7 C13.2 31.3 13.6 31 14.2 31 C15.2 31 16 31.8 16 33 C16 34.5 13 37 13 37 Z"
+              fill="#f29ab0"
+              opacity="0.9"
+            />
+          </g>
+        )}
+
+        {/* Tilted Envelope Group */}
+        <g transform={`rotate(${rot} 48 33)`} filter={`url(#softShadow-${variant})`}>
+          {/* Envelope Body */}
+          <rect x="20" y="14" width="56" height="38" rx="4.5" fill={`url(#envGrad-${variant})`} stroke="#c87687" strokeWidth="1.5" />
+
+          {/* Interior bottom fold seams */}
+          <path d="M20 52 L41 35" stroke="#d892a2" strokeWidth="1.2" strokeLinecap="round" />
+          <path d="M76 52 L55 35" stroke="#d892a2" strokeWidth="1.2" strokeLinecap="round" />
+
+          {/* Top folded triangular flap */}
+          <path d="M20 14 L48 35 L76 14 Z" fill={`url(#flapGrad-${variant})`} stroke="#c87687" strokeWidth="1.5" strokeLinejoin="round" />
+          <path d="M24 15 L48 33 L72 15" stroke="#ffffff" strokeWidth="1.2" strokeLinecap="round" opacity="0.7" />
+
+          {/* Dimensional Heart Wax Seal at Center */}
+          <path
+            d="M48 38 C48 38 41 33 41 28.5 C41 25.5 43.3 23.5 46 23.5 C47.3 23.5 48 24.3 48 25 C48 24.3 48.7 23.5 50 23.5 C52.7 23.5 55 25.5 55 28.5 C55 33 48 38 48 38 Z"
+            fill={`url(#heartGrad-${variant})`}
+            stroke="#b53b5a"
+            strokeWidth="0.9"
+          />
+          {/* Delicate Highlight Dot on Heart */}
+          <circle cx="44.5" cy="26.5" r="1.2" fill="#ffffff" opacity="0.85" />
+        </g>
       </svg>
     </div>
   )
