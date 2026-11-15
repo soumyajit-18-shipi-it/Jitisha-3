@@ -20,31 +20,28 @@ function SectionTitle({ eyebrow, title, copy }: { eyebrow?: string; title: strin
 
 function MessageBoxDiagram({ variant = 0 }: { variant?: number }) {
   const themes = [
-    { bg: '#fff5f7', flap: '#ffe8ee', stroke: '#c65b79', seal: '#c65b79', fold: 'rgba(198, 91, 121, 0.32)' },
-    { bg: '#fff9f2', flap: '#fdefdf', stroke: '#c4687d', seal: '#b8546b', fold: 'rgba(196, 104, 125, 0.32)' },
-    { bg: '#faf4fb', flap: '#f3e5f7', stroke: '#a85b88', seal: '#9d4f7d', fold: 'rgba(168, 91, 136, 0.32)' },
-    { bg: '#fdf7f4', flap: '#faebe4', stroke: '#c65b79', seal: '#bd4b6b', fold: 'rgba(198, 91, 121, 0.32)' },
+    { bg: '#fff5f7', flap: '#ffe8ee', stroke: '#c65b79', seal: '#c65b79', fold: 'rgba(198, 91, 121, 0.35)' },
+    { bg: '#fff9f2', flap: '#fdefdf', stroke: '#c4687d', seal: '#b8546b', fold: 'rgba(196, 104, 125, 0.35)' },
+    { bg: '#faf4fb', flap: '#f3e5f7', stroke: '#a85b88', seal: '#9d4f7d', fold: 'rgba(168, 91, 136, 0.35)' },
+    { bg: '#fdf7f4', flap: '#faebe4', stroke: '#c65b79', seal: '#bd4b6b', fold: 'rgba(198, 91, 121, 0.35)' },
   ]
   const t = themes[variant % themes.length]
 
   return (
     <div className="envelope-diagram" aria-hidden="true">
       <svg viewBox="0 0 76 52" width="76" height="52" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <defs>
-          <filter id={`shadow-${variant}`} x="-15%" y="-15%" width="130%" height="135%" filterUnits="userSpaceOnUse">
-            <feDropShadow dx="0" dy="2.5" stdDeviation="2.5" floodColor="#782d46" floodOpacity="0.12" />
-          </filter>
-        </defs>
+        {/* Soft shadow rect under envelope (avoids WebKit SVG filter quirks) */}
+        <rect x="4" y="5" width="68" height="44" rx="4" fill="rgba(120, 45, 70, 0.08)" />
 
         {/* Envelope Base Box */}
-        <rect x="3" y="3" width="70" height="46" rx="5" fill={t.bg} stroke={t.stroke} strokeWidth="1.5" filter={`url(#shadow-${variant})`} />
+        <rect x="3" y="3" width="70" height="46" rx="4" fill={t.bg} stroke={t.stroke} strokeWidth="1.5" />
 
         {/* Diagonal Interior Folds */}
         <path d="M3 49 L38 27 L3 3" stroke={t.fold} strokeWidth="1.2" strokeLinecap="round" />
         <path d="M73 49 L38 27 L73 3" stroke={t.fold} strokeWidth="1.2" strokeLinecap="round" />
 
         {/* Bottom Fold Contour */}
-        <path d="M3 49 L38 27 L73 49 Z" fill={t.flap} fillOpacity="0.5" stroke={t.stroke} strokeWidth="1.2" strokeLinejoin="round" />
+        <path d="M3 49 L38 27 L73 49 Z" fill={t.flap} fillOpacity="0.55" stroke={t.stroke} strokeWidth="1.2" strokeLinejoin="round" />
 
         {/* Top Folded Flap */}
         <path d="M3 3 L38 29 L73 3 Z" fill={t.flap} stroke={t.stroke} strokeWidth="1.5" strokeLinejoin="round" />
@@ -401,8 +398,8 @@ function App() {
               <span className="eyebrow">For the girl who makes my world brighter...</span>
               <h1>Jitisha <em>♡</em></h1>
               <p>A little corner of the internet, made with a whole lot of love.</p>
-              <small>Every little thing here reminds me of you ♡</small>
-              <button className="primary" onClick={() => scrollTo('letter')}>
+              <small className="hero-whisper-desktop">Every little thing here reminds me of you ♡</small>
+              <button className="primary hero-btn-desktop" onClick={() => scrollTo('letter')}>
                 Enter your little world <ArrowDown size={16} />
               </button>
             </motion.div>
@@ -415,6 +412,14 @@ function App() {
               <img src={personalPhotos[0].src} alt={personalPhotos[0].alt} />
               <span>{personalPhotos[0].caption}</span>
             </motion.div>
+
+            {/* Mobile Action placed under the polaroid for natural iPhone reading flow */}
+            <div className="hero-mobile-action">
+              <button className="primary hero-btn-mobile" onClick={() => scrollTo('letter')}>
+                Enter your little world <ArrowDown size={16} />
+              </button>
+              <small>Every little thing here reminds me of you ♡</small>
+            </div>
           </div>
           <div className="hero-stamp" aria-hidden="true">made<br />with<br /><b>love</b></div>
         </section>

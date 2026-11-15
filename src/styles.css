@@ -650,6 +650,18 @@ img {
   pointer-events: none;
 }
 
+.hero-mobile-action {
+  display: none;
+}
+
+.hero-btn-desktop {
+  display: inline-flex;
+}
+
+.hero-whisper-desktop {
+  display: block;
+}
+
 .petals {
   position: absolute;
   inset: 0;
@@ -2430,12 +2442,12 @@ footer {
    15. MASTER RESPONSIVE MOBILE EXPERIENCE (< 800px)
    ========================================================================== */
 @media (max-width: 800px) {
-  /* Clean Floating Navbar on Mobile */
+  /* Clean Floating Navbar on Mobile with iPhone 16 Dynamic Island Safe Area */
   .nav {
-    padding: 14px 5%;
+    padding: calc(14px + env(safe-area-inset-top, 0px)) 5% 12px;
   }
   .nav.solid {
-    padding: 11px 5%;
+    padding: calc(11px + env(safe-area-inset-top, 0px)) 5% 10px;
   }
   .nav-links {
     display: none;
@@ -2455,124 +2467,185 @@ footer {
     font-size: 0.72rem;
   }
 
-  /* Intimate & Balanced Hero */
+  /* Intimate & Balanced Hero for iPhone 16 / Mobile */
   .hero {
-    min-height: 88vh;
-    padding: 95px 5.5% 45px;
+    min-height: 100vh;
+    min-height: 100dvh;
+    padding: calc(78px + env(safe-area-inset-top, 0px)) 5.5% calc(32px + env(safe-area-inset-bottom, 0px));
     align-items: center;
+    justify-content: center;
   }
   .hero-inner {
     flex-direction: column;
     text-align: center;
-    gap: 26px;
+    gap: 14px;
+    width: 100%;
+    max-width: 360px;
+    margin: 0 auto;
   }
   .hero-copy {
     max-width: 100%;
   }
+  .hero-copy .eyebrow {
+    display: block;
+    font-family: 'Caveat', cursive;
+    font-size: clamp(1.1rem, 3.8vw, 1.3rem);
+    color: var(--dust);
+    margin-bottom: 2px;
+  }
   .hero h1 {
-    font-size: clamp(2.9rem, 12vw, 4rem);
-    margin: 10px 0 16px;
+    font-size: clamp(2.4rem, 9.2vw, 3.3rem);
+    line-height: 1.02;
+    margin: 4px 0 8px;
+    letter-spacing: -0.02em;
   }
   .hero-copy p {
-    font-size: clamp(1.22rem, 4.2vw, 1.45rem);
-    margin: 0 auto 14px;
-    max-width: 340px;
+    font-size: clamp(1.1rem, 3.8vw, 1.28rem);
+    line-height: 1.38;
+    margin: 0 auto 4px;
+    max-width: 320px;
+    color: #fffaf5;
+  }
+  .hero-whisper-desktop {
+    display: none;
+  }
+  .hero-btn-desktop {
+    display: none;
   }
   .hero-polaroid {
-    width: min(270px, 75vw);
-    padding: 10px 10px 40px;
+    width: min(230px, 64vw);
+    padding: 8px 8px 34px;
     margin: 4px auto 0;
-    transform: rotate(2.5deg) !important;
-    box-shadow: 0 18px 45px rgba(28, 12, 22, 0.4);
+    transform: rotate(2deg) !important;
+    box-shadow: 0 16px 42px rgba(28, 12, 22, 0.45);
   }
   .hero-polaroid span {
-    font-size: 1.18rem;
-    bottom: 10px;
+    font-size: 1.1rem;
+    bottom: 7px;
+  }
+  .hero-mobile-action {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+    margin-top: 6px;
+  }
+  .hero-btn-mobile {
+    display: inline-flex;
+    margin-top: 2px;
+    min-height: 46px;
+    padding: 11px 24px;
+    font-size: 0.74rem;
+  }
+  .hero-mobile-action small {
+    display: block;
+    color: rgba(252, 238, 242, 0.85);
+    font-family: 'Caveat', cursive;
+    font-size: 1.15rem;
   }
   .hero-stamp {
     position: static;
     display: block;
-    margin: 14px auto 0;
-    transform: rotate(-6deg);
-    font-size: 1.15rem;
-    color: rgba(247, 226, 232, 0.7);
+    margin: 8px auto 0;
+    transform: rotate(-5deg);
+    font-size: 1.1rem;
+    color: rgba(247, 226, 232, 0.65);
   }
 
   /* About Her / Love Letter */
   .letter-section {
-    padding-top: 70px;
+    padding-top: 60px;
   }
   .paper-letter {
     grid-template-columns: 1fr;
-    gap: 24px;
-    padding: 28px 18px;
+    gap: 18px;
+    padding: 24px 16px;
+    border-radius: 12px;
+  }
+  .paper-letter::before,
+  .paper-letter::after {
+    display: none;
   }
   .letter-image {
-    width: min(270px, 80%);
-    transform: rotate(-2.5deg) !important;
-    padding: 10px 10px 30px;
+    width: min(240px, 72vw);
+    transform: rotate(-2deg) !important;
+    padding: 8px 8px 28px;
+    margin: 0 auto;
   }
   .letter-copy {
     text-align: left;
   }
   .letter-copy .section-title {
-    margin-bottom: 16px;
+    margin-bottom: 14px;
+  }
+  .letter-copy p {
+    font-size: 1.15rem;
+    line-height: 1.6;
+    margin: 10px 0;
   }
 
   /* Her Little World: 2-Column Pinterest Moodboard */
   .world-grid {
     grid-template-columns: repeat(2, 1fr);
-    gap: 12px;
-    margin-bottom: 48px;
+    gap: 10px;
+    margin-bottom: 38px;
   }
-  .card-0 { grid-column: span 2; height: 230px; }
-  .card-1 { height: 200px; }
-  .card-2 { height: 200px; }
-  .card-3 { height: 200px; }
-  .card-4 { height: 200px; }
-  .card-5 { height: 200px; }
-  .card-6 { height: 200px; }
-  .card-7 { height: 200px; }
-  .card-8 { height: 200px; }
-  .card-9 { height: 200px; }
-  .card-10 { height: 200px; }
-  .card-11 { height: 200px; }
+  .card-0 { grid-column: span 2; height: 210px; }
+  .card-1 { height: 180px; }
+  .card-2 { height: 180px; }
+  .card-3 { height: 180px; }
+  .card-4 { height: 180px; }
+  .card-5 { height: 180px; }
+  .card-6 { height: 180px; }
+  .card-7 { height: 180px; }
+  .card-8 { height: 180px; }
+  .card-9 { height: 180px; }
+  .card-10 { height: 180px; }
+  .card-11 { height: 180px; }
 
   .favourite-card {
     border-radius: 12px;
   }
   .favourite-card > div {
-    bottom: 12px;
-    left: 12px;
-    right: 12px;
+    bottom: 10px;
+    left: 10px;
+    right: 10px;
   }
   .favourite-card h3 {
-    font-size: 1.25rem;
+    font-size: 1.15rem;
   }
   .favourite-card span {
-    font-size: 0.95rem;
+    font-size: 0.88rem;
   }
 
   /* Flowers Collage */
   .flowers {
     grid-template-columns: 1fr;
     text-align: center;
-    padding: 26px 18px;
-    gap: 20px;
+    padding: 22px 14px;
+    gap: 16px;
+    border-radius: 14px;
+  }
+  .flowers-copy h3 {
+    font-size: 1.8rem;
   }
   .flower-photos {
     width: 100%;
-    min-height: 260px;
+    min-height: 220px;
     gap: 8px;
   }
 
   /* Destinations */
   .destination-scroller {
     gap: 14px;
-    padding: 8px 4px 22px;
+    padding: 8px 4px 20px;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
   }
   .destination-card {
-    flex: 0 0 240px;
+    flex: 0 0 235px;
+    scroll-snap-align: start;
   }
   .destination-card:nth-child(even) {
     transform: none;
@@ -2588,15 +2661,15 @@ footer {
     -webkit-overflow-scrolling: touch;
   }
   .cinematic article {
-    flex: 0 0 min(290px, 80vw);
-    height: 350px;
+    flex: 0 0 min(275px, 76vw);
+    height: 330px;
     scroll-snap-align: center;
     border-radius: 12px;
   }
 
   /* Photo Gallery Scrapbook Mobile Overhaul */
   .gallery-stage {
-    padding: 30px 12px 35px;
+    padding: 22px 10px 28px;
     min-height: auto;
     border-radius: 14px;
   }
@@ -2614,15 +2687,15 @@ footer {
     justify-content: center;
     gap: 8px;
     flex-wrap: wrap;
-    margin-bottom: 22px;
+    margin-bottom: 18px;
   }
   .gallery-note {
     position: static !important;
     display: inline-flex;
     align-items: center;
     transform: none !important;
-    padding: 6px 14px;
-    font-size: 0.92rem;
+    padding: 5px 12px;
+    font-size: 0.88rem;
     border-radius: 999px;
     box-shadow: 0 3px 10px rgba(198, 91, 121, 0.15);
   }
@@ -2633,7 +2706,7 @@ footer {
   /* Clean Balanced 2-Column Mobile Scrapbook */
   .gallery-stage .photo-grid {
     grid-template-columns: repeat(2, 1fr);
-    gap: 12px;
+    gap: 10px;
   }
   .gp-0 {
     grid-column: span 2;
@@ -2650,7 +2723,7 @@ footer {
   .gp-8 { transform: rotate(-1.5deg) !important; margin-top: 0; }
 
   .gallery-photo {
-    padding: 7px 7px 34px;
+    padding: 6px 6px 32px;
     border-radius: 2px;
     box-shadow: 0 8px 20px rgba(56, 35, 45, 0.1);
   }
@@ -2659,11 +2732,13 @@ footer {
     border-radius: 2px;
   }
   .gallery-photo span {
-    font-size: 0.92rem;
-    bottom: 6px;
-    left: 8px;
-    right: 24px;
+    font-size: 0.9rem;
+    bottom: 5px;
+    left: 6px;
+    right: 6px;
     white-space: normal;
+    line-height: 1.15;
+    text-align: center;
   }
 
   /* Music Player Mobile Card */
@@ -2671,13 +2746,13 @@ footer {
     flex-wrap: wrap;
     justify-content: center;
     text-align: center;
-    padding: 22px 18px;
-    gap: 14px;
+    padding: 20px 16px;
+    gap: 12px;
   }
   .record {
     order: 1;
-    width: 72px;
-    height: 72px;
+    width: 68px;
+    height: 68px;
   }
   .music-notes-floating {
     left: 45%;
@@ -2693,23 +2768,78 @@ footer {
     height: 48px;
   }
 
-  /* Surprises Section Mobile */
+  /* Surprises Section Mobile - Symmetrical 2x2 Letter Cards */
   .letter-grid {
     grid-template-columns: repeat(2, 1fr);
-    gap: 12px;
+    gap: 10px;
   }
   .envelope {
-    padding: 24px 10px 18px;
+    min-height: 180px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 8px 14px;
+    box-sizing: border-box;
+  }
+  .envelope-diagram {
+    margin: 0 auto 8px;
   }
   .envelope strong {
-    font-size: 1.05rem;
+    font-size: 0.98rem;
+    line-height: 1.25;
+    margin: 4px 0;
+    min-height: 2.5em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  }
+  .envelope small {
+    margin-top: auto;
+    font-size: 0.92rem;
+  }
+  .letter-flower {
+    top: 8px;
+    right: 10px;
+    font-size: 0.95rem;
   }
 
+  /* Love Jar Reasons Card */
+  .love-jar-card {
+    padding: 20px 14px;
+    margin: 30px auto 20px;
+    border-radius: 14px;
+  }
+  .love-jar-top h3 {
+    font-size: 1.4rem;
+  }
+  .love-jar-text {
+    min-height: 70px;
+    padding: 6px 8px;
+  }
+  .love-jar-text p {
+    font-size: 1.15rem;
+    line-height: 1.4;
+  }
+  .hug-container {
+    margin: 18px auto 26px;
+  }
+  .hug-btn {
+    padding: 10px 20px;
+    font-size: 0.9rem;
+  }
+
+  /* Chocolate Box */
   .gift-card {
     grid-template-columns: 1fr;
     text-align: center;
-    padding: 30px 16px;
-    gap: 22px;
+    padding: 26px 14px;
+    gap: 18px;
+    margin: 36px auto;
+  }
+  .gift-copy h3 {
+    font-size: 1.75rem;
   }
   .gift-copy p {
     margin-inline: auto;
@@ -2725,8 +2855,12 @@ footer {
   .rose-surprise {
     grid-template-columns: 1fr;
     text-align: center;
-    padding: 40px 16px 25px;
-    gap: 22px;
+    padding: 30px 14px 20px;
+    gap: 18px;
+    margin-top: 36px;
+  }
+  .rose-surprise h2 {
+    font-size: 1.85rem;
   }
   .secret-copy > span {
     justify-content: center;
@@ -2734,7 +2868,7 @@ footer {
   .secret-illustration {
     justify-self: center;
     width: 100%;
-    height: 300px;
+    height: 280px;
   }
   .secret-card {
     position: relative;
@@ -2744,16 +2878,24 @@ footer {
     margin-top: 16px;
   }
 
+  /* Mobile Drawer Safe Area */
+  .mobile-drawer {
+    padding-top: calc(18px + env(safe-area-inset-top, 0px));
+    padding-bottom: calc(24px + env(safe-area-inset-bottom, 0px));
+  }
+
   /* Lightbox Mobile Navigation */
   .photo-modal {
     flex-direction: column;
     gap: 12px;
+    padding-top: calc(20px + env(safe-area-inset-top, 0px));
+    padding-bottom: calc(24px + env(safe-area-inset-bottom, 0px));
   }
   .photo-modal > .lightbox-arrow {
     display: none;
   }
   .lightbox-close {
-    top: 16px;
+    top: calc(16px + env(safe-area-inset-top, 0px));
     right: 16px;
   }
   .lightbox-image-container img {
@@ -2793,6 +2935,7 @@ footer {
     flex-direction: column;
     text-align: center;
     gap: 10px;
+    padding-bottom: calc(30px + env(safe-area-inset-bottom, 0px));
   }
 }
 
