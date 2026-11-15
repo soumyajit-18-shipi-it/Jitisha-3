@@ -230,6 +230,13 @@ function App() {
     }
   }
 
+  useEffect(() => {
+    if (window.location.hash) {
+      const id = window.location.hash.replace('#', '')
+      setTimeout(() => scrollTo(id), 150)
+    }
+  }, [])
+
   const navItems = [
     { label: 'About Her', id: 'letter', icon: '💌' },
     { label: 'Her Little World', id: 'world', icon: '🌸' },
@@ -394,7 +401,7 @@ function App() {
           <div className="hero-wash" />
           <div className="petals" aria-hidden="true"><i>✦</i><i>♡</i><i>✦</i><i>·</i></div>
           <div className="hero-inner">
-            <motion.div className="hero-copy" initial="hidden" animate="visible" variants={reveal}>
+            <div className="hero-copy">
               <span className="eyebrow">For the girl who makes my world brighter...</span>
               <h1>Jitisha <em>♡</em></h1>
               <p>A little corner of the internet, made with a whole lot of love.</p>
@@ -402,18 +409,13 @@ function App() {
               <button className="primary hero-btn-desktop" onClick={() => scrollTo('letter')}>
                 Enter your little world <ArrowDown size={16} />
               </button>
-            </motion.div>
-            <motion.div
-              className="hero-polaroid"
-              initial={{ opacity: 0, y: 35, rotate: 5 }}
-              animate={{ opacity: 1, y: 0, rotate: 3 }}
-              transition={{ delay: .35, duration: .9 }}
-            >
+            </div>
+            <div className="hero-polaroid">
               <img src={personalPhotos[0].src} alt={personalPhotos[0].alt} />
               <span>{personalPhotos[0].caption}</span>
-            </motion.div>
+            </div>
 
-            {/* Mobile Action placed under the polaroid for natural iPhone reading flow */}
+            {/* Mobile Action placed under the polaroid */}
             <div className="hero-mobile-action">
               <button className="primary hero-btn-mobile" onClick={() => scrollTo('letter')}>
                 Enter your little world <ArrowDown size={16} />
