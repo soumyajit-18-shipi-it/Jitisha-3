@@ -1476,10 +1476,12 @@ img {
 
 .letter-flower {
   position: absolute;
-  top: 12px;
+  top: 10px;
   right: 14px;
-  color: var(--rose);
-  font-size: 1.15rem;
+  color: #c8657f;
+  font-family: 'Playfair Display', serif;
+  font-size: 1.4rem;
+  line-height: 1;
 }
 
 .envelope-diagram {
@@ -2952,9 +2954,11 @@ footer {
   }
   .letter-flower {
     top: 8px;
-    right: 10px;
-    color: #c65b79;
-    font-size: 1rem;
+    right: 12px;
+    color: #c8657f;
+    font-family: 'Playfair Display', serif;
+    font-size: 1.25rem;
+    line-height: 1;
   }
 
   /* Love Jar Reasons Card */

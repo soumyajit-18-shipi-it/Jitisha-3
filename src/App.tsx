@@ -21,14 +21,14 @@ function SectionTitle({ eyebrow, title, copy }: { eyebrow?: string; title: strin
 function MessageBoxDiagram({ variant = 0 }: { variant?: number }) {
   return (
     <div className="envelope-diagram" aria-hidden="true">
-      <svg viewBox="0 0 54 22" width="54" height="22" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <svg viewBox="0 0 46 20" width="46" height="20" fill="none" xmlns="http://www.w3.org/2000/svg">
         {/* Aesthetic Envelope Flap Chevron from Reference Image */}
-        <line x1="4" y1="20" x2="27" y2="4" stroke="#c65b79" strokeWidth="1.4" strokeLinecap="round" />
-        <line x1="27" y1="4" x2="50" y2="20" stroke="#c65b79" strokeWidth="1.4" strokeLinecap="round" />
-        {/* Tiny suspension line from apex */}
-        <line x1="27" y1="4" x2="27" y2="8" stroke="#c65b79" strokeWidth="1.2" />
-        {/* Diamond seal (rhombus) */}
-        <path d="M27 7.5 L31 12 L27 16.5 L23 12 Z" fill="#c65b79" />
+        <line x1="3" y1="18" x2="23" y2="2" stroke="#c8657f" strokeWidth="1.5" strokeLinecap="round" />
+        <line x1="23" y1="2" x2="43" y2="18" stroke="#c8657f" strokeWidth="1.5" strokeLinecap="round" />
+        {/* Suspension link from apex */}
+        <line x1="23" y1="2" x2="23" y2="5.5" stroke="#c8657f" strokeWidth="1.3" />
+        {/* Diamond seal (rhombus) nestled right beneath apex */}
+        <polygon points="23,4.5 27.5,9 23,13.5 18.5,9" fill="#c8657f" />
       </svg>
     </div>
   )
@@ -565,7 +565,7 @@ function App() {
                 onClick={() => setLetter(i)}
                 aria-label={`Open letter: ${label}`}
               >
-                <span className="letter-flower" aria-hidden="true">✽</span>
+                <span className="letter-flower" aria-hidden="true">*</span>
                 <MessageBoxDiagram variant={i} />
                 <strong>{label}</strong>
                 <small>tap to open ♡</small>
