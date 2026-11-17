@@ -2,7 +2,10 @@ import { useEffect, useRef, useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { ArrowDown, ArrowLeft, ArrowRight, Menu, Pause, Play, Sparkles, Volume1, Volume2, VolumeX, X, Heart, Music, ExternalLink } from 'lucide-react'
 import { beIntehaa, chocolates, destinations, dhireDhire, favourites, flowers, letters, loveReasons, personalPhotos, SPOTIFY_PLAYLIST_URL } from './content'
-import { RomanticHeartLoader } from './components/RomanticHeartLoader'
+import { CupidHeartArrowLoader } from './components/CupidHeartArrowLoader'
+import { FloatingPetalsCanvas } from './components/FloatingPetalsCanvas'
+import { UnfoldingLoveLetter } from './components/UnfoldingLoveLetter'
+import { BloomingRoseSurprise } from './components/BloomingRoseSurprise'
 
 interface HeartParticle {
   id: number
@@ -131,7 +134,6 @@ function App() {
   const [dhireProgress, setDhireProgress] = useState(0)
   const [letter, setLetter] = useState<number | null>(null)
   const [photo, setPhoto] = useState<number | null>(null)
-  const [roseOpen, setRoseOpen] = useState(false)
   const [giftOpen, setGiftOpen] = useState(false)
   const [navSolid, setNavSolid] = useState(false)
   const [hearts, setHearts] = useState<HeartParticle[]>([])
@@ -309,9 +311,9 @@ function App() {
 
   return (
     <div className="site">
-      {/* Romantic Heart Opening Loader */}
+      {/* Romantic Cupid Heart-and-Arrow Intro Loader */}
       {loaderActive && (
-        <RomanticHeartLoader
+        <CupidHeartArrowLoader
           onComplete={() => {
             setSiteReady(true)
             setLoaderActive(false)
@@ -320,6 +322,9 @@ function App() {
           }}
         />
       )}
+
+      {/* Floating Rose Petals Canvas */}
+      <FloatingPetalsCanvas />
 
       {/* Interactive Tap & Click Floating Hearts */}
       <div className="tap-hearts-layer" aria-hidden="true">
@@ -475,19 +480,48 @@ function App() {
           <div className="hero-wash" />
           <div className="petals" aria-hidden="true"><i>✦</i><i>♡</i><i>✦</i><i>·</i></div>
           <div className="hero-inner">
-            <div className="hero-copy">
-              <span className="eyebrow">For the girl who makes my world brighter...</span>
-              <h1>Jitisha <em>♡</em></h1>
-              <p>A little corner of the internet, made with a whole lot of love.</p>
+            <motion.div
+              className="hero-copy"
+              initial={{ opacity: 0, y: 18 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.15 }}
+            >
+              <motion.span
+                className="eyebrow"
+                initial={{ opacity: 0, y: -6 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.25 }}
+              >
+                For the girl who makes my world brighter...
+              </motion.span>
+              <motion.h1
+                initial={{ opacity: 0, y: 15 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.85, delay: 0.4 }}
+              >
+                Jitisha <em>♡</em>
+              </motion.h1>
+              <motion.p
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.7, delay: 0.6 }}
+              >
+                A little corner of the internet, made with a whole lot of love.
+              </motion.p>
               <small className="hero-whisper-desktop">Every little thing here reminds me of you ♡</small>
               <button className="primary hero-btn-desktop" onClick={() => scrollTo('letter')}>
                 Enter your little world <ArrowDown size={16} />
               </button>
-            </div>
-            <div className="hero-polaroid">
+            </motion.div>
+            <motion.div
+              className="hero-polaroid"
+              initial={{ opacity: 0, scale: 0.93, rotate: -2 }}
+              animate={{ opacity: 1, scale: 1, rotate: -1.5 }}
+              transition={{ duration: 0.9, delay: 0.35, ease: [0.22, 1, 0.36, 1] }}
+            >
               <img src={personalPhotos[0].src} alt={personalPhotos[0].alt} />
               <span>{personalPhotos[0].caption}</span>
-            </div>
+            </motion.div>
 
             {/* Mobile Action placed under the polaroid */}
             <div className="hero-mobile-action">
@@ -498,6 +532,22 @@ function App() {
             </div>
           </div>
           <div className="hero-stamp" aria-hidden="true">made<br />with<br /><b>love</b></div>
+
+          {/* Cinematic Animated Scroll Indicator */}
+          <motion.div
+            className="hero-scroll-indicator"
+            initial={{ opacity: 0, y: -6 }}
+            animate={{ opacity: 1, y: [0, 6, 0] }}
+            transition={{
+              opacity: { delay: 1.1, duration: 0.7 },
+              y: { duration: 2.2, repeat: Infinity, ease: 'easeInOut' }
+            }}
+            onClick={() => scrollTo('letter')}
+            aria-label="Scroll to explore"
+          >
+            <span>scroll to explore</span>
+            <span className="scroll-chevron">♡</span>
+          </motion.div>
         </section>
 
         {/* Letter / About Her Section */}
@@ -560,15 +610,22 @@ function App() {
         <section id="dreams" className="dreams section-pad">
           <SectionTitle eyebrow="Dream with you" title="Places I Dream of Exploring With You ♡" copy="Some places are beautiful. Some would be even more beautiful with you." />
           <div className="destination-scroller">
-            {destinations.map(([name, copy, src]) => (
-              <article className="destination-card" key={name}>
+            {destinations.map(([name, copy, src], index) => (
+              <motion.article
+                className="destination-card"
+                key={name}
+                initial={{ opacity: 0, y: 28 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.2 }}
+                transition={{ duration: 0.7, delay: index * 0.12, ease: [0.22, 1, 0.36, 1] }}
+              >
                 <img src={src} alt={name} loading="lazy" />
                 <div>
                   <span>dream destination 0{destinations.findIndex(d => d[0] === name) + 1}</span>
                   <h3>{name}</h3>
                   <p>{copy}</p>
                 </div>
-              </article>
+              </motion.article>
             ))}
           </div>
         </section>
@@ -577,18 +634,36 @@ function App() {
         <section className="cinematic section-pad">
           <SectionTitle eyebrow="Little dreams" title="Little Things I'd Love to Experience With You." />
           <div className="cinematic-grid">
-            <article style={{ backgroundImage: "url('/photos/sunset-dream.png')" }}>
-              <span>01 — sunset</span>
+            <motion.article
+              style={{ backgroundImage: "url('/photos/sunset-dream.png')" }}
+              initial={{ opacity: 0, y: 35, scale: 0.96 }}
+              whileInView={{ opacity: 1, y: 0, scale: 1 }}
+              viewport={{ once: true, amount: 0.25 }}
+              transition={{ duration: 0.85, ease: [0.22, 1, 0.36, 1] }}
+            >
+              <span>01 — sunset ♡</span>
               <p>Watching the sky change colours, and forgetting about everything else for a while.</p>
-            </article>
-            <article style={{ backgroundImage: "url('/photos/long-drives.png')" }}>
-              <span>02 — long drives</span>
+            </motion.article>
+            <motion.article
+              style={{ backgroundImage: "url('/photos/long-drives.png')" }}
+              initial={{ opacity: 0, y: 35, scale: 0.96 }}
+              whileInView={{ opacity: 1, y: 0, scale: 1 }}
+              viewport={{ once: true, amount: 0.25 }}
+              transition={{ duration: 0.85, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
+            >
+              <span>02 — long drives ♡</span>
               <p>Favourite songs, endless conversations and nowhere particular to be.</p>
-            </article>
-            <article style={{ backgroundImage: "url('/photos/beach-proposal.png')" }}>
-              <span>03 — by the sea</span>
+            </motion.article>
+            <motion.article
+              style={{ backgroundImage: "url('/photos/beach-proposal.png')" }}
+              initial={{ opacity: 0, y: 35, scale: 0.96 }}
+              whileInView={{ opacity: 1, y: 0, scale: 1 }}
+              viewport={{ once: true, amount: 0.25 }}
+              transition={{ duration: 0.85, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
+            >
+              <span>03 — by the sea ♡</span>
               <p>Somewhere by the sea, under a beautiful sunset, making a moment worth remembering forever.</p>
-            </article>
+            </motion.article>
           </div>
         </section>
 
@@ -604,15 +679,25 @@ function App() {
             <div className="gallery-ribbon" aria-hidden="true" />
             <div className="photo-grid">
               {personalPhotos.map((item, i) => (
-                <button
-                  className={`gallery-photo gp-${i}`}
+                <motion.button
+                  className={`gallery-photo gp-${i} ${i === 4 ? 'gp-central' : ''}`}
                   key={item.src}
                   onClick={() => setPhoto(i)}
                   aria-label={`Open photo ${i + 1}: ${item.caption}`}
+                  initial={{ opacity: 0, y: 26, scale: 0.95 }}
+                  whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                  viewport={{ once: true, amount: 0.18 }}
+                  transition={{
+                    duration: 0.65,
+                    delay: (i % 3) * 0.12,
+                    ease: [0.22, 1, 0.36, 1],
+                  }}
+                  whileHover={{ y: -6, scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
                 >
                   <img src={item.src} alt={item.alt} loading="lazy" />
                   <span>{item.caption}</span>
-                </button>
+                </motion.button>
               ))}
             </div>
           </div>
@@ -634,7 +719,18 @@ function App() {
               </div>
             )}
             <div className="track-info">
-              <span>now playing</span>
+              <span>
+                now playing
+                {dhirePlaying && (
+                  <span className="music-visualizer-bars" aria-hidden="true">
+                    <i className="music-bar active-1" />
+                    <i className="music-bar active-2" />
+                    <i className="music-bar active-3" />
+                    <i className="music-bar active-4" />
+                  </span>
+                )}
+                {dhirePlaying && <span className="music-pulse-heart" aria-hidden="true">♡</span>}
+              </span>
               <h3>{dhireDhire.title}</h3>
               <p>{dhireDhire.artist} · a little song for the road home</p>
               <div
@@ -660,6 +756,10 @@ function App() {
         {/* Little Surprises Section */}
         <section id="surprises" className="surprises section-pad">
           <SectionTitle eyebrow="Little surprises" title="Little Letters, Just for You." copy="Open one whenever you need a little warmth." />
+          
+          {/* Unfolding Love Letter Scroll Interaction */}
+          <UnfoldingLoveLetter />
+
           <div className="letter-grid">
             {letters.map(([label], i) => (
               <button
@@ -743,66 +843,40 @@ function App() {
             </button>
           </div>
 
-          {/* Rose & Secret Message Surprise */}
-          <div className="rose-surprise">
-            <div className="secret-copy">
-              <span>One last little surprise...</span>
-              <h2>There's something<br />hidden here for you.</h2>
-              <button
-                className="secret-discover"
-                onClick={() => setRoseOpen(open => !open)}
-                aria-expanded={roseOpen}
-              >
-                {roseOpen ? 'Close secret' : 'Discover'} <b>{roseOpen ? '✕' : '→'}</b>
-              </button>
-            </div>
-
-            <motion.button
-              className={roseOpen ? 'secret-illustration opened' : 'secret-illustration'}
-              onClick={() => setRoseOpen(open => !open)}
-              aria-label={roseOpen ? 'Close the secret envelope' : 'Open the secret envelope'}
-              animate={{ y: roseOpen ? -5 : 0 }}
-            >
-              <span className="secret-glow" aria-hidden="true" />
-              <span className="secret-flower flower-one" aria-hidden="true"><i /><i /><b /></span>
-              <span className="secret-flower flower-two" aria-hidden="true"><i /><i /><b /></span>
-              <span className="secret-envelope" aria-hidden="true">
-                <i className="envelope-flap" />
-                <i className="envelope-fold left" />
-                <i className="envelope-fold right" />
-                <b className="wax-seal">✦</b>
-              </span>
-              <span className="secret-leaves leaves-left" aria-hidden="true"><i /><i /><i /></span>
-              <span className="secret-leaves leaves-right" aria-hidden="true"><i /><i /><i /></span>
-              <span className="secret-sparkles" aria-hidden="true">✦　✧　✦</span>
-            </motion.button>
-
-            <AnimatePresence>
-              {roseOpen && (
-                <motion.div
-                  className="secret-card"
-                  initial={{ opacity: 0, y: 18 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: 18 }}
-                >
-                  <Sparkles size={18} />
-                  <button onClick={() => setRoseOpen(false)} aria-label="Close secret message">×</button>
-                  <p>You make the world feel softer, brighter and more beautiful. That is the little secret. ♡</p>
-                </motion.div>
-              )}
-            </AnimatePresence>
-          </div>
+          {/* Blooming Rose Surprise Component */}
+          <BloomingRoseSurprise />
         </section>
 
         {/* Final Ending Section */}
         <section className="final">
           <div className="final-overlay" />
-          <div className="final-copy">
+          <motion.div
+            className="final-copy"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.25 }}
+            transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
+          >
+            {/* Closing Romantic Photograph */}
+            <motion.div
+              className="final-polaroid-frame"
+              initial={{ opacity: 0, scale: 0.92, rotate: -2 }}
+              whileInView={{ opacity: 1, scale: 1, rotate: -1.5 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+            >
+              <img src="/photos/portrait-05.png" alt="Jitisha" loading="lazy" />
+              <span className="final-polaroid-caption">in every universe ♡</span>
+            </motion.div>
+
             <span>No matter where life takes you...</span>
-            <h2>I hope you always have beautiful places to explore, little reasons to smile, dreams to chase, songs to sing and countless moments that make your heart happy.</h2>
+            <h2>
+              And if I had to choose again, I'd still choose you.{' '}
+              <span className="final-pulsing-heart" aria-hidden="true">♡</span>
+            </h2>
             <p>You deserve all the beautiful things this world has to offer.</p>
-            <div className="signature">Made with love, just for you, Jitisha. ♡</div>
-          </div>
+            <div className="signature">Always, in every little universe. ♡</div>
+          </motion.div>
         </section>
       </main>
 
