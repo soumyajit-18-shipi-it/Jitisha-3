@@ -3177,6 +3177,10 @@ footer {
   padding: calc(20px + env(safe-area-inset-top, 0px)) 20px calc(24px + env(safe-area-inset-bottom, 0px));
 }
 
+.romantic-loader-overlay.finishing {
+  pointer-events: none;
+}
+
 .loader-ambient-glow {
   position: absolute;
   width: min(380px, 90vw);

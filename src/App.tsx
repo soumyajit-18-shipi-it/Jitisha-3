@@ -140,6 +140,7 @@ function App() {
   const [hugCount, setHugCount] = useState(0)
   const [hugMessage, setHugMessage] = useState('')
   const [siteReady, setSiteReady] = useState(false)
+  const [loaderActive, setLoaderActive] = useState(true)
   const beAudioRef = useRef<HTMLAudioElement>(null)
   const dhireAudioRef = useRef<HTMLAudioElement>(null)
 
@@ -309,7 +310,16 @@ function App() {
   return (
     <div className="site">
       {/* Romantic Heart Opening Loader */}
-      <RomanticHeartLoader onComplete={() => setSiteReady(true)} />
+      {loaderActive && (
+        <RomanticHeartLoader
+          onComplete={() => {
+            setSiteReady(true)
+            setLoaderActive(false)
+            document.body.style.overflow = ''
+            document.body.style.touchAction = ''
+          }}
+        />
+      )}
 
       {/* Interactive Tap & Click Floating Hearts */}
       <div className="tap-hearts-layer" aria-hidden="true">

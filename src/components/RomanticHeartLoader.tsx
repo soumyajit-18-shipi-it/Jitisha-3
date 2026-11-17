@@ -19,9 +19,13 @@ export function RomanticHeartLoader({ onComplete }: RomanticHeartLoaderProps) {
     const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)')
     setPrefersReducedMotion(mediaQuery.matches)
 
-    // Lock body scroll while loader is visible
-    const originalOverflow = document.body.style.overflow
-    const originalTouchAction = document.body.style.touchAction
+    // Helper to safely unlock scroll
+    const unlockScroll = () => {
+      document.body.style.overflow = ''
+      document.body.style.touchAction = ''
+    }
+
+    // Lock body scroll while loader is actively presenting
     document.body.style.overflow = 'hidden'
     document.body.style.touchAction = 'none'
 
@@ -33,9 +37,12 @@ export function RomanticHeartLoader({ onComplete }: RomanticHeartLoaderProps) {
     const finishLoading = () => {
       if (!isMounted) return
       setIsFinishing(true)
+      // Restore scrolling immediately when finishing/fadeout begins
+      unlockScroll()
       // Allow final gentle heartbeat pulse before smooth fadeout
       setTimeout(() => {
         if (!isMounted) return
+        unlockScroll()
         setIsVisible(false)
         if (onComplete) onComplete()
       }, mediaQuery.matches ? 100 : 450)
@@ -70,23 +77,27 @@ export function RomanticHeartLoader({ onComplete }: RomanticHeartLoaderProps) {
         clearTimeout(timer)
         window.removeEventListener('load', onReady)
         isMounted = false
-        document.body.style.overflow = originalOverflow
-        document.body.style.touchAction = originalTouchAction
+        unlockScroll()
       }
     }
 
     return () => {
       isMounted = false
-      document.body.style.overflow = originalOverflow
-      document.body.style.touchAction = originalTouchAction
+      unlockScroll()
     }
   }, [onComplete])
 
+  const unlockScroll = () => {
+    document.body.style.overflow = ''
+    document.body.style.touchAction = ''
+  }
+
   return (
-    <AnimatePresence>
+    <AnimatePresence onExitComplete={unlockScroll}>
       {isVisible && (
         <motion.div
-          className="romantic-loader-overlay"
+          key="romantic-loader-overlay"
+          className={`romantic-loader-overlay ${isFinishing ? 'finishing' : ''}`}
           initial={{ opacity: 1 }}
           exit={{
             opacity: 0,
