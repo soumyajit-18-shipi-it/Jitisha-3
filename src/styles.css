@@ -3161,7 +3161,172 @@ footer {
 }
 
 /* ==========================================================================
-   16. ACCESSIBILITY & PREFERS-REDUCED-MOTION
+   16. ROMANTIC HEART LOADER EXPERIENCE
+   ========================================================================== */
+.romantic-loader-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: radial-gradient(ellipse at 50% 45%, #fffbfc 0%, #fef3f6 45%, #fcecf0 100%);
+  user-select: none;
+  overflow: hidden;
+  padding: calc(20px + env(safe-area-inset-top, 0px)) 20px calc(24px + env(safe-area-inset-bottom, 0px));
+}
+
+.loader-ambient-glow {
+  position: absolute;
+  width: min(380px, 90vw);
+  height: min(380px, 90vw);
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(234, 132, 155, 0.2) 0%, rgba(252, 222, 230, 0.08) 55%, transparent 75%);
+  filter: blur(36px);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.loader-content {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  width: 100%;
+  max-width: 420px;
+  margin: 0 auto;
+}
+
+.loader-heart-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 22px;
+}
+
+.loader-floating-hearts {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.floating-mini-heart {
+  position: absolute;
+  font-family: 'Caveat', cursive;
+  font-size: 1.25rem;
+  line-height: 1;
+  pointer-events: none;
+  user-select: none;
+}
+
+.heart-left {
+  top: 30%;
+  left: 18%;
+  color: #ea7d95;
+}
+
+.heart-right {
+  top: 32%;
+  right: 16%;
+  color: #f28da1;
+}
+
+.heart-top {
+  top: 10%;
+  left: 48%;
+  color: #e56582;
+}
+
+.loader-heart-svg-box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  will-change: transform;
+}
+
+.loader-heart-svg {
+  display: block;
+  overflow: visible;
+  filter: drop-shadow(0 8px 24px rgba(216, 90, 120, 0.18));
+}
+
+.loader-text-area {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  width: 100%;
+}
+
+.loader-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1.15rem, 4.2vw, 1.48rem);
+  font-weight: 500;
+  color: #482433;
+  margin: 0 0 5px;
+  letter-spacing: -0.01em;
+  line-height: 1.25;
+}
+
+.loader-subtitle {
+  font-family: 'Caveat', cursive;
+  font-size: clamp(1.22rem, 4.8vw, 1.6rem);
+  font-weight: 500;
+  color: #c85a77;
+  margin: 0 0 16px;
+}
+
+.loader-progress-track {
+  width: 136px;
+  height: 2.5px;
+  background: rgba(200, 90, 119, 0.16);
+  border-radius: 999px;
+  overflow: hidden;
+  margin: 0 auto 12px;
+  position: relative;
+}
+
+.loader-progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #f8a5b7 0%, #e26a87 100%);
+  border-radius: 999px;
+  box-shadow: 0 0 8px rgba(226, 106, 135, 0.45);
+}
+
+.loader-sparkles {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  font-size: 0.72rem;
+  color: #d67a90;
+  opacity: 0.85;
+  letter-spacing: 0.1em;
+}
+
+.loader-sparkles .heart-dot {
+  font-family: 'Caveat', cursive;
+  font-size: 0.95rem;
+  color: #e26a87;
+}
+
+@media (max-width: 480px) {
+  .loader-heart-svg {
+    width: 120px;
+    height: 112px;
+  }
+  .loader-progress-track {
+    width: 120px;
+  }
+}
+
+/* ==========================================================================
+   17. ACCESSIBILITY & PREFERS-REDUCED-MOTION
    ========================================================================== */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {

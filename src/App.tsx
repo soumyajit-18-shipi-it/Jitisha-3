@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { ArrowDown, ArrowLeft, ArrowRight, Menu, Pause, Play, Sparkles, Volume1, Volume2, VolumeX, X, Heart, Music, ExternalLink } from 'lucide-react'
 import { beIntehaa, chocolates, destinations, dhireDhire, favourites, flowers, letters, loveReasons, personalPhotos, SPOTIFY_PLAYLIST_URL } from './content'
+import { RomanticHeartLoader } from './components/RomanticHeartLoader'
 
 interface HeartParticle {
   id: number
@@ -138,6 +139,7 @@ function App() {
   const [noteFlip, setNoteFlip] = useState(false)
   const [hugCount, setHugCount] = useState(0)
   const [hugMessage, setHugMessage] = useState('')
+  const [siteReady, setSiteReady] = useState(false)
   const beAudioRef = useRef<HTMLAudioElement>(null)
   const dhireAudioRef = useRef<HTMLAudioElement>(null)
 
@@ -306,6 +308,9 @@ function App() {
 
   return (
     <div className="site">
+      {/* Romantic Heart Opening Loader */}
+      <RomanticHeartLoader onComplete={() => setSiteReady(true)} />
+
       {/* Interactive Tap & Click Floating Hearts */}
       <div className="tap-hearts-layer" aria-hidden="true">
         {hearts.map(h => (
